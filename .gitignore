@@ -1,0 +1,8 @@
+SConstruct
+*.json
+*.asc
+*.bin
+.*.dblite
+*.out
+*.vcd
+*.svg
