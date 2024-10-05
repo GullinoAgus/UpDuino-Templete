@@ -8,20 +8,23 @@ else
     uname_S := $(shell uname -s)
 endif
 
-ifeq ($(uname_S), Windows)	
-    APIOPKGFOLDER = $${USERPROFILE}\.apio	# Direccion a la carpeta .apio (usualmente en la carpeta del usuario)
+ifeq ($(uname_S), Windows)
+	# Direccion a la carpeta .apio (usualmente en la carpeta del usuario)
+    	APIOPKGFOLDER = $${USERPROFILE}\.apio
 	OSSCAD_LIB_IVL = "$(APIOPKGFOLDER)\packages\tools-oss-cad-suite\lib\ivl"
 	OSSCAD_ICE40_PREDEFMODULES = "$(APIOPKGFOLDER)\packages\tools-oss-cad-suite\share\yosys\ice40\cells_sim.v"
 endif
 
 ifeq ($(uname_S), Linux)
-    APIOPKGFOLDER = $${HOME}/.apio	# Direccion a la carpeta .apio (usualmente en la carpeta del usuario)
+	# Direccion a la carpeta .apio (usualmente en la carpeta del usuario)
+    	APIOPKGFOLDER = $${HOME}/.apio
 	OSSCAD_LIB_IVL = "$(APIOPKGFOLDER)/packages/tools-oss-cad-suite/lib/ivl"
 	OSSCAD_ICE40_PREDEFMODULES = "$(APIOPKGFOLDER)/packages/tools-oss-cad-suite/share/yosys/ice40/cells_sim.v"
 endif
 
 ifeq ($(uname_S), Darwin)
-	APIOPKGFOLDER = $${HOME}/.apio	# Direccion a la carpeta .apio (usualmente en la carpeta del usuario)
+	# Direccion a la carpeta .apio (usualmente en la carpeta del usuario)
+	APIOPKGFOLDER = $${HOME}/.apio
 	OSSCAD_LIB_IVL = "$(APIOPKGFOLDER)/packages/tools-oss-cad-suite/lib/ivl"
 	OSSCAD_ICE40_PREDEFMODULES = "$(APIOPKGFOLDER)/packages/tools-oss-cad-suite/share/yosys/ice40/cells_sim.v"
 endif
@@ -54,7 +57,7 @@ all: hardware.bin
 
 hardware.json: $(SOURCES)
 #	yosys -p "synth_ice40 -dsp -json hardware.json -abc9 -device u" C $(SOURCES)
-	$(YOSYS) -p "synth_ice40 -dsp -json hardware.json" $(QUIET) $(SOURCES)'
+	$(YOSYS) -p "synth_ice40 -dsp -top top -json hardware.json" $(QUIET) $(SOURCES)'
 
 hardware.asc: $(PCF) hardware.json
 	$(ICE40) --up5k --package sg48 --json hardware.json --asc hardware.asc --pcf $(PCF) --freq 72 $(QUIET)'
